@@ -1,0 +1,18 @@
+This is a collection of small or rather small pieces of code I often use
+while designing in CλaSH.
+
+Some of this code dates back to CλaSH v0.3.3, but this repository is created
+fresh for CλaSH v1.0.1. Some of the code might even depend on features not
+yet in any released version of CλaSH. No attempt has been made to precisely
+indicate these dependencies.
+
+The module hierarchy below Test mirrors the top-level hierarchy, so
+"tests" for Toolbox.ClockScaler are in the hierarchy rooted at
+Test.Toolbox.ClockScaler.
+
+These tests can be unit tests, other types of tests and example top entities.
+These last not only serve as a way to test code, but also as an example of
+how to use it.
+
+The directory quartus/ offers some Intel Quartus projects in the hope that
+they might be useful for a quick start with those top entities.

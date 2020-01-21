@@ -1,0 +1,10 @@
+/main
+.*.swp
+vhdl/
+verilog/
+systemverilog/
+*.o
+*.hi
+*.dyn_o
+*.dyn_hi
+*.vcd

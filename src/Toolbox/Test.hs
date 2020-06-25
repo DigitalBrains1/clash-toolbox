@@ -114,6 +114,7 @@ traceSignalT2 (n1, n2) inp = bundle (s1', s2')
  - Lift seqX to applicative for easy infix use
  -}
 seqXA = liftA2 seqX
+infixr 0 `seqXA`
 
 {----------------------------------------------------------------------------
  - Dataflow-like simulation helpers

@@ -47,3 +47,11 @@ snatTH n =
     sigE
         [| SNat |]
         $ appT (conT ''SNat) $ litT $ numTyLit $ toInteger n
+
+{-
+ - Type synonym for a mealy machine
+ -
+ - This avoids having to write the type of the state twice, increasing
+ - readability when the state is large.
+ -}
+type Mealy s i o = s -> i -> (s, o)

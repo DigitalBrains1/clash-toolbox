@@ -32,6 +32,7 @@ import Clash.Prelude
 --import Control.Applicative
 --import GHC.Generics (Generic)
 import qualified Toolbox.ClockScaler as CS
+import Toolbox.Misc
 
 {-
  - Serial data output routine
@@ -93,6 +94,16 @@ output' shifter (ck, ld, dIn) = (shifter', (scaler, done, txd))
  - If `empty` is asserted, we no longer try to assert `ld`.
  -}
 
+outputFIFO
+    :: HiddenClockResetEnable dom
+    => Signal dom Bool
+    -> Signal dom Bool
+    -> Signal dom (Unsigned 8)
+    -> ( Signal dom Bool
+       , Signal dom CS.State
+       , Signal dom Bit
+       )
+
 outputFIFO ck empty dIn = (ld, scaler, txd)
     where
         (scaler, done, txd) = output ck ld dIn
@@ -136,6 +147,10 @@ input cTick dIn = mealyB input' initInput (cTick, dInS)
     where
         dInS = register 1 $ register 1 dIn
 
+input'
+    :: Mealy (State, Unsigned 4, Bool, Vec 9 Bit, Unsigned 2) (Bool, Bit)
+             ((Bool, Unsigned 8), Bool)
+
 input' s@(mode, wait, run, shift, sample) (cTick, dIn)
     = (s', ((frameErr, dOut), dValid))
     where
@@ -144,10 +159,11 @@ input' s@(mode, wait, run, shift, sample) (cTick, dIn)
         dOut = bitCoerce $ tail shift' :: Unsigned 8
         dValid = run && (not run')
 
-input'' :: (State, Unsigned 4, Bool, Vec 9 Bit, Unsigned 2)
-       -> Bool
-       -> Bit
-       -> (State, Unsigned 4, Bool, Vec 9 Bit, Unsigned 2)
+input''
+    :: (State, Unsigned 4, Bool, Vec 9 Bit, Unsigned 2)
+    -> Bool
+    -> Bit
+    -> (State, Unsigned 4, Bool, Vec 9 Bit, Unsigned 2)
 
 --         mode     wait    run   shift   sample  cTick dIn
 input'' s                                         False _

@@ -38,6 +38,8 @@ import Toolbox.Misc (snatTH)
 {- Reads characters from RxD and echoes them on TxD, but bit 5 is inverted.
  - This swaps case on alphabetics
  -}
+echoSwapCase
+    :: HiddenClockResetEnable dom => Signal dom Bit -> Signal dom Bit
 echoSwapCase rxd = txd
     where
 -- This will work once CλaSH has merged PR #1020

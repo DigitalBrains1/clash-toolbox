@@ -35,6 +35,7 @@ import qualified Toolbox.ClockScaler as CS
 import Toolbox.Serial
 import Toolbox.Misc (snatTH)
 
+hallo :: Vec 7 (Unsigned 8)
 hallo = $(listToVecTH [72 :: Unsigned 8,97,108,108,111,13,10])
 
 halloRepeater
@@ -56,6 +57,7 @@ halloRepeater s ld = (s',d)
 {-
  - Send the string "Hallo<CR><LF>" over and over on TxD.
  -}
+halloTransmitter :: HiddenClockResetEnable dom => Signal dom Bit
 halloTransmitter = txd
     where
         d = mealy halloRepeater 0 done

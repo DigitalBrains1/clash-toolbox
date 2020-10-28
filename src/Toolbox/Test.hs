@@ -97,8 +97,10 @@ runTBs
     => [Signal dom Bool]
     -> IO ()
 runTBs tbs
-    = print $ P.head $ dropWhile id
-    $ P.map (P.head . dropWhile not . sample) tbs P.++ [False]
+    = if ( P.head $ dropWhile id
+         $ P.map (P.head . dropWhile not . sample) tbs P.++ [False])
+      then error "runTBs: impossible state"
+      else putStrLn "Testbenches have run."
 
 {-
  - Trace the elements of a two-tuple Signal individually
